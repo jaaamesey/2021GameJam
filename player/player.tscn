@@ -1,15 +1,8 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
 [ext_resource path="res://player/sprite.gd" type="Script" id=3]
-[ext_resource path="res://player/spr/walk/Wombat Walk Cycle_0000.png" type="Texture" id=4]
-[ext_resource path="res://player/spr/walk/Wombat Walk Cycle_0001.png" type="Texture" id=5]
-[ext_resource path="res://player/spr/walk/Wombat Walk Cycle_0002.png" type="Texture" id=6]
-[ext_resource path="res://player/spr/walk/Wombat Walk Cycle_0003.png" type="Texture" id=7]
-[ext_resource path="res://player/spr/walk/Wombat Walk Cycle_0004.png" type="Texture" id=8]
-[ext_resource path="res://player/spr/jump/Wombat Jump_0002.png" type="Texture" id=9]
-[ext_resource path="res://player/spr/jump/Wombat Jump_0001.png" type="Texture" id=10]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0003.png" type="Texture" id=11]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0004.png" type="Texture" id=12]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0005.png" type="Texture" id=13]
@@ -28,18 +21,11 @@
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 42.0831
-height = 99.0636
-
-[sub_resource type="RayShape2D" id=3]
-length = 17.2609
+[sub_resource type="RayShape2D" id=10]
+length = 16.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 2.72004
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 66, 6.779 )
 
 [sub_resource type="Gradient" id=6]
 
@@ -54,30 +40,30 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "jump",
-"speed": 5.0
+"name": "walk",
+"speed": 8.0
 }, {
 "frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 20 ), ExtResource( 22 ) ],
 "loop": true,
 "name": "dig",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=9]
-radius = 53.6411
-height = 63.585
+radius = 6.33131
+height = 10.3406
 
 [node name="player" type="RigidBody2D"]
 mode = 2
@@ -104,49 +90,23 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
 texture = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-position = Vector2( 0, -16.1943 )
-polygon = PoolVector2Array( 0, -101.045, -72, -76, 0, 0, 72, -76 )
-disabled = true
-
-[node name="Capsule" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -48.7157 )
-rotation = 1.57079
-shape = SubResource( 2 )
-
-[node name="FloorCastC" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -20.115 )
-shape = SubResource( 3 )
-
-[node name="FloorCastL" type="CollisionShape2D" parent="."]
-position = Vector2( -69, -20.115 )
-shape = SubResource( 3 )
-
-[node name="FloorCastR" type="CollisionShape2D" parent="."]
-position = Vector2( 69, -20.115 )
-shape = SubResource( 3 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+shape = SubResource( 10 )
 
 [node name="DigHitbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DigHitbox"]
 position = Vector2( 0, -45.5504 )
 shape = SubResource( 4 )
-
-[node name="ground_check" type="Area2D" parent="."]
-visible = false
-position = Vector2( 0, -12.6943 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_check"]
-modulate = Color( 0.054902, 0, 1, 1 )
-position = Vector2( 0, 5.12654 )
-shape = SubResource( 5 )
-disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -64 )
@@ -165,17 +125,17 @@ scale = Vector2( 0.167118, 27.4752 )
 texture = SubResource( 7 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -89.9643 )
+position = Vector2( 0, -16 )
 frames = SubResource( 8 )
 animation = "idle"
 script = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]
+visible = false
 modulate = Color( 0, 0.607843, 0.180392, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/HurtBox"]
-position = Vector2( 0, 22.943 )
-rotation = 1.57079
+position = Vector2( 0, 2.15105 )
 shape = SubResource( 9 )
 
 [node name="DigIndicator" type="Sprite" parent="."]

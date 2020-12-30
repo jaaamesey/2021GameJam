@@ -19,43 +19,26 @@ func _physics_process(delta: float) -> void:
 	var next_anim := "idle"
 
 	match player.facing:
-		Vector2.UP:
-			rotation_degrees = -90
-			offset.y = -32
-		Vector2.DOWN:
-			rotation_degrees = -90
-			flip_h = true
-			offset.y = -32
 		Vector2.LEFT:
 			flip_h = true
 		Vector2.RIGHT:
 			pass
 
-	if player.facing.y != 0:
-		if player.dig_facing == Vector2.LEFT or player.last_input_x < 0:
-			flip_v = true
-
-	if flip_v:
-		offset.y = 32
-
 	if (player.can_jump() or player.grounded) and (abs(player.input_x) > 0 or abs(player.linear_velocity.x) > 70):
 		next_anim = "walk"
 
-	if player.is_forced_small() and abs(player.input_y) > 0:
+	if abs(player.input_y) > 0:
 		next_anim = "walk"
 
-	if !player.grounded and !player.is_forced_small():
+	if !player.grounded:
 		next_anim = "fall"
 		reset_to_h()
 
 		if player.linear_velocity.y < 0:
 			next_anim = "jump"
 
-	if !player.is_forced_small() and player.facing == Vector2.DOWN:
+	if player.facing == Vector2.DOWN:
 		reset_to_h()
-
-	if player.in_dig():
-		next_anim = "dig"
 
 	if animation == "walk" and next_anim == "idle":
 		if not frame in [0, 2, 4]:
@@ -73,16 +56,6 @@ func _physics_process(delta: float) -> void:
 	if animation != next_anim and time_since_last_anim > 0.12:
 		animation = next_anim
 		time_since_last_anim = 0
-
-	if animation in ["jump", "fall"]:
-		offset.y = 16
-
-	if rotation_degrees == 90:
-		offset.x = 30
-	elif rotation_degrees == -90:
-		offset.x = -60
-
-	$HurtBox.position.x = offset.x
 
 func reset_to_h():
 	rotation_degrees = 0
