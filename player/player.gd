@@ -5,8 +5,8 @@ var dirt_fx := preload("res://fx/Dirt Crumbles/dirt.tscn")
 
 var x_spd_deadzone := 3.0
 
-var ground_accel_spd := 3.0
-var air_accel_spd := 3.0
+var ground_accel_spd := 2.4
+var air_accel_spd := 2.4
 var max_spd := 270.0
 var ground_friction := 3.0
 var air_friction := 0.4
@@ -16,23 +16,32 @@ var dig_slowdown := 124.0
 var dig_y_slowdown := 0.64
 
 var grav_spd := 10.0
-var max_grav := 420
-var jump_height := 450
-var jump_let_go_fall_spd := 50
+var max_grav := 420.0
+var jump_height := 450.0
+var jump_let_go_fall_spd := 50.0
+
+var wall_slide_slowdown := 1.0
+var max_grav_during_wall_slide = 14.0
+var wall_jump_height := 450.0
+var wall_jump_pushback := 200.0
 
 var wait_to_dig_time := 0.134
 
 onready var timer_times := {
 	"jump_cooldown": 0.20,
-	"jump_buffer": 0.20,
+	"jump_buffer": 0.18,
 	"short_hop": 0.10,
-	"coyote_time": 0.10
+	"coyote_time": 0.10,
+	"wall_coyote_time": 0.40
 }
 var timers := {}
 
 var grounded := false
 
 var prev_ground_velocity := Vector2()
+var last_wall_slide_dir := 0
+var last_wall_jump_dir := 0
+var was_inputting_x_during_wall_slide := false
 
 var facing := Vector2.RIGHT
 var dig_facing := facing
@@ -72,6 +81,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	var prev_grounded := grounded
 	var ground_velocity := Vector2()
 	grounded = false
+	
 	# Get collisions
 	var collisions := []
 	for i in range(state.get_contact_count()):
@@ -85,11 +95,12 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 			grounded = true
 			if body is RigidBody2D and abs(body.linear_velocity.x) > abs(ground_velocity.x):
 				ground_velocity.x = body.linear_velocity.x
+	
 
 	# If just left ground
 	if prev_grounded and !grounded:
 		start_timer("coyote_time")
-
+		
 	# Handle input
 	input_x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 	input_y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
@@ -109,6 +120,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 
 	if grounded:
 		dx -= prev_ground_velocity.x
+		last_wall_jump_dir = 0 # Reset wall jumps
 
 	var accel_spd := ground_accel_spd
 	if !grounded:
@@ -133,15 +145,63 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 			ddx = -damp_spd
 		elif dx < -x_spd_deadzone:
 			ddx = damp_spd
+			
+			
+	# Wall slide check (needs to be separate to ensure grounded value is always correct)
+	var wall_slide_dir := 0 # -1: wall on left, 0: not sliding, 1: wall on right
+	if !grounded and !can_jump() and timer_done("jump_cooldown"):
+		for i in range(state.get_contact_count()):
+			var body := state.get_contact_collider_object(i)
+			if body == self:
+				continue
+			var normal := state.get_contact_local_normal(i)
+			var threshold = 0.6
+			if normal.dot(Vector2.LEFT) > threshold:
+				wall_slide_dir = 1
+			elif normal.dot(Vector2.RIGHT) > threshold:
+				wall_slide_dir = -1
+	
+	if wall_slide_dir != 0:
+		last_wall_slide_dir = wall_slide_dir
 
+		if input_x != 0:
+			was_inputting_x_during_wall_slide = true
+			
+		elif timer_done("wall_coyote_time"):
+			# Only set to false if on first frame of wall slide and no x input
+			was_inputting_x_during_wall_slide = false 
+			
+		start_timer("wall_coyote_time")
 
-	if !timer_done("jump_buffer") and can_jump():
-		dy = -jump_height
+	if !timer_done("jump_buffer"): 
+		if can_jump():
+			# Perform jump
+			dy = -jump_height
 
-		start_timer("jump_cooldown")
-		start_timer("short_hop")
-		clear_timer("jump_buffer")
-		clear_timer("coyote_time")
+			start_timer("jump_cooldown")
+			start_timer("short_hop")
+			clear_timer("jump_buffer")
+			clear_timer("coyote_time")
+		elif !grounded and !can_jump() and !timer_done("wall_coyote_time"):
+			var wall_jump_dir := 0
+			if last_wall_slide_dir == -1:
+				wall_jump_dir = 1
+			elif last_wall_slide_dir == 1:
+				wall_jump_dir = -1
+			
+			var can_wall_jump = wall_jump_dir != 0 #and last_wall_jump_dir != wall_jump_dir 
+			
+			if can_wall_jump and (was_inputting_x_during_wall_slide or input_x != 0):
+				# Perform wall jump
+				dx = wall_jump_dir * wall_jump_pushback
+				dy = -wall_jump_height
+				
+				last_wall_jump_dir = wall_jump_dir
+				
+				start_timer("jump_cooldown")
+				start_timer("short_hop")
+				clear_timer("jump_buffer")
+				clear_timer("wall_coyote_time")
 
 	if dy < 0:
 		if !jump_held and timer_done("short_hop") and !grounded:
@@ -151,8 +211,17 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		dx = 0
 
 	dx += ddx
-	dy += grav_spd
 	
+	var grav_spd_mod = 1.0
+	var doing_wall_slide = dy > 0 and wall_slide_dir != 0 and sign(wall_slide_dir) == sign(input_x)
+	if doing_wall_slide:
+		grav_spd_mod *= wall_slide_slowdown
+		
+	dy += grav_spd * grav_spd_mod
+	
+	if doing_wall_slide and input_y <= 0:
+		dy = min(dy, max_grav_during_wall_slide)
+		
 	dy = min(dy, max_grav)
 
 	dx += ground_velocity.x
