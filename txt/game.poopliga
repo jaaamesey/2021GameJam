@@ -1,0 +1,367 @@
+{
+  "__META__*****": {
+    "key": "__META__*****",
+    "type": 0,
+    "text": "",
+    "char": "",
+    "tail": "",
+    "posx": 0,
+    "posy": 0,
+    "data": {
+      "project_settings": {
+        "dialogue_box_style": 3,
+        "author": "",
+        "description": "",
+        "custom_block_attributes": "",
+        "spellcheck_ignored_words": ""
+      },
+      "last_saved": {
+        "year": 2020,
+        "month": 1,
+        "day": 27,
+        "weekday": 1,
+        "dst": false,
+        "hour": 23,
+        "minute": 25,
+        "second": 24
+      },
+      "last_camera_pos": "(604.658203, 11829.65918)"
+    }
+  },
+  "3bd1e31965": {
+    "key": "3bd1e31965",
+    "type": 1,
+    "text": "Well, guess I better get that back.",
+    "char": "",
+    "tail": "4793ab85e1",
+    "posx": 692,
+    "posy": 5086,
+    "data": {
+
+    }
+  },
+  "4793ab85e1": {
+    "key": "4793ab85e1",
+    "type": 1,
+    "text": "Onward! For glory!",
+    "char": "",
+    "tail": "2a489edf4b",
+    "posx": 692,
+    "posy": 5686,
+    "data": {
+
+    }
+  },
+  "2a489edf4b": {
+    "key": "2a489edf4b",
+    "type": 1,
+    "text": "And my club I guess...",
+    "char": "",
+    "tail": "END_START",
+    "posx": 692,
+    "posy": 6286,
+    "data": {
+
+    }
+  },
+  "c8f5ccb3d6": {
+    "key": "c8f5ccb3d6",
+    "type": 1,
+    "text": "A journal?",
+    "char": "Kai",
+    "tail": "b01396c006",
+    "posx": 698,
+    "posy": 7580,
+    "data": {
+
+    }
+  },
+  "b01396c006": {
+    "key": "b01396c006",
+    "type": 1,
+    "text": "\"Day fourteen. Hard to believe we've made it this far.",
+    "char": "???",
+    "tail": "e08bd55907",
+    "posx": 698,
+    "posy": 8180,
+    "data": {
+
+    }
+  },
+  "e08bd55907": {
+    "key": "e08bd55907",
+    "type": 1,
+    "text": "Resources are getting harder to come by and these infernal devices I now call hands don't exactly assist in the ways I'd hope.",
+    "char": "",
+    "tail": "c146317cbc",
+    "posx": 698,
+    "posy": 8780,
+    "data": {
+
+    }
+  },
+  "c146317cbc": {
+    "key": "c146317cbc",
+    "type": 1,
+    "text": "I'm barely able to write this entry. I just hope that whatever spell that damned cobber laid upon our heads wears off soon. For my sake and Avocas...",
+    "char": "",
+    "tail": "dcb53c87e8",
+    "posx": 698,
+    "posy": 9379,
+    "data": {
+
+    }
+  },
+  "e627e1320f": {
+    "key": "e627e1320f",
+    "type": 1,
+    "text": "Man...",
+    "char": "",
+    "tail": "4665f17c19",
+    "posx": 696,
+    "posy": 10577,
+    "data": {
+
+    }
+  },
+  "e07de36327": {
+    "key": "e07de36327",
+    "type": 1,
+    "text": "Inside this system of intricate tunnels lies the remaining forces of our invaders, transformed into critters, creatures and cane toads by a previous cobber.",
+    "char": "",
+    "tail": "0d70f3d39c",
+    "posx": 684,
+    "posy": -721,
+    "data": {
+
+    }
+  },
+  "0d70f3d39c": {
+    "key": "0d70f3d39c",
+    "type": 1,
+    "text": "However, this spell has a ticking clock, and if I don't vanquish these villains soon, they may revert back to human form and rise again from the underground.",
+    "char": "",
+    "tail": "f8cea14caa",
+    "posx": 684,
+    "posy": -121,
+    "data": {
+
+    }
+  },
+  "f8cea14caa": {
+    "key": "f8cea14caa",
+    "type": 1,
+    "text": "And for that reason, and that reason alone, that is why...",
+    "char": "",
+    "tail": "92422c9197",
+    "posx": 684,
+    "posy": 479,
+    "data": {
+
+    }
+  },
+  "92422c9197": {
+    "key": "92422c9197",
+    "type": 1,
+    "text": "Why I've turned myself into a wombat.",
+    "char": "",
+    "tail": "9b06f51a05",
+    "posx": 684,
+    "posy": 1079,
+    "data": {
+
+    }
+  },
+  "9b06f51a05": {
+    "key": "9b06f51a05",
+    "type": 1,
+    "text": "This has nothing to do with the fact I want a socially acceptable reason to eat grass.",
+    "char": "",
+    "tail": "cbf9b94951",
+    "posx": 684,
+    "posy": 1679,
+    "data": {
+
+    }
+  },
+  "cbf9b94951": {
+    "key": "cbf9b94951",
+    "type": 1,
+    "text": "It's one hundred per cent for the sake of the pilgrimage.",
+    "char": "",
+    "tail": "09497d32e0",
+    "posx": 684,
+    "posy": 2279,
+    "data": {
+
+    }
+  },
+  "dcb53c87e8": {
+    "key": "dcb53c87e8",
+    "type": 1,
+    "text": "...",
+    "char": "Kai",
+    "tail": "e627e1320f",
+    "posx": 696,
+    "posy": 9977,
+    "data": {
+
+    }
+  },
+  "4665f17c19": {
+    "key": "4665f17c19",
+    "type": 1,
+    "text": "Whoever wrote this has terrible handwriting.",
+    "char": "",
+    "tail": "END",
+    "posx": 696,
+    "posy": 11177,
+    "data": {
+
+    }
+  },
+  "START": {
+    "key": "START",
+    "type": 1,
+    "text": "Alright; quick mental health recap.",
+    "char": "Kai",
+    "tail": "e07de36327",
+    "posx": 682,
+    "posy": -1267,
+    "data": {
+
+    }
+  },
+  "09497d32e0": {
+    "key": "09497d32e0",
+    "type": 1,
+    "text": "Anyway, guess this whole situation couldn't get any 'worse'.",
+    "char": "",
+    "tail": "4690564eef",
+    "posx": 688,
+    "posy": 2882,
+    "data": {
+
+    }
+  },
+  "JOURNAL": {
+    "key": "JOURNAL",
+    "type": 1,
+    "text": "Hmm. What do we have here?",
+    "char": "Kai",
+    "tail": "c8f5ccb3d6",
+    "posx": 696,
+    "posy": 6972,
+    "data": {
+
+    }
+  },
+  "c_16360fc8": {
+    "key": "c_16360fc8",
+    "type": 3,
+    "text": "Start - white background black text",
+    "char": "",
+    "tail": "",
+    "posx": -3,
+    "posy": -1305,
+    "data": {
+
+    }
+  },
+  "DUMB": {
+    "key": "DUMB",
+    "type": 1,
+    "text": "Awesome. I'm the embodiment of idiocy.",
+    "char": "Kai",
+    "tail": "3bd1e31965",
+    "posx": 692,
+    "posy": 4486,
+    "data": {
+
+    }
+  },
+  "c_86349036": {
+    "key": "c_86349036",
+    "type": 3,
+    "text": "Kai drops his club down the entrance of the cavern; we hear it clunk against rock and hit someone on the head.",
+    "char": "",
+    "tail": "",
+    "posx": 687,
+    "posy": 4073,
+    "data": {
+
+    }
+  },
+  "c_d3515846": {
+    "key": "c_d3515846",
+    "type": 3,
+    "text": "Separated by audio",
+    "char": "",
+    "tail": "",
+    "posx": 118,
+    "posy": 4087,
+    "data": {
+
+    }
+  },
+  "c_c6e5d034": {
+    "key": "c_c6e5d034",
+    "type": 3,
+    "text": "When you collide with journal stuff",
+    "char": "",
+    "tail": "",
+    "posx": 46,
+    "posy": 7040,
+    "data": {
+
+    }
+  },
+  "END": {
+    "key": "END",
+    "type": 1,
+    "text": "To be continued...",
+    "char": "",
+    "tail": "",
+    "posx": 696,
+    "posy": 11777,
+    "data": {
+
+    }
+  },
+  "4690564eef": {
+    "key": "4690564eef",
+    "type": 1,
+    "text": "I mean, it's a good thing I'm still armed at least.",
+    "char": "",
+    "tail": "PLAY_SOUND",
+    "posx": 1678,
+    "posy": 3285,
+    "data": {
+
+    }
+  },
+  "PLAY_SOUND": {
+    "key": "PLAY_SOUND",
+    "type": 1,
+    "text": "",
+    "char": "",
+    "tail": "",
+    "posx": 1628,
+    "posy": 3901,
+    "data": {
+
+    }
+  },
+  "END_START": {
+    "key": "END_START",
+    "type": 1,
+    "text": "",
+    "char": "",
+    "tail": "",
+    "posx": 1549,
+    "posy": 6289,
+    "data": {
+
+    }
+  }
+}

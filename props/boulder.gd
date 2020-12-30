@@ -1,0 +1,2 @@
+class_name Boulder
+extends RigidBody2D

@@ -1,0 +1,22 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fx/Dirt Crumbles/dirt.gd" type="Script" id=1]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0001.png" type="Texture" id=2]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0000.png" type="Texture" id=3]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0002.png" type="Texture" id=4]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0003.png" type="Texture" id=5]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0004.png" type="Texture" id=6]
+[ext_resource path="res://fx/Dirt Crumbles/Dirt Crumbles_0005.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "default",
+"speed": 20.0
+} ]
+
+[node name="dirt" type="AnimatedSprite"]
+frames = SubResource( 1 )
+script = ExtResource( 1 )
+[connection signal="animation_finished" from="." to="." method="_on_dirt_animation_finished"]
