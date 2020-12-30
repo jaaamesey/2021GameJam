@@ -5,27 +5,28 @@ var dirt_fx := preload("res://fx/Dirt Crumbles/dirt.tscn")
 
 var x_spd_deadzone := 3.0
 
-var ground_accel_spd := 4.0
+var ground_accel_spd := 3.0
 var air_accel_spd := 3.0
-var max_spd := 300.0
+var max_spd := 270.0
 var ground_friction := 3.0
 var air_friction := 0.4
-var flip_dir_spd := 1.4
+var flip_dir_spd := 1.8
 var vertical_crawl_spd := 260
 var dig_slowdown := 124.0
 var dig_y_slowdown := 0.64
 
 var grav_spd := 10.0
-var jump_height := 420
+var max_grav := 420
+var jump_height := 450
 var jump_let_go_fall_spd := 50
 
 var wait_to_dig_time := 0.134
 
 onready var timer_times := {
-	"jump_cooldown": 0.2,
-	"jump_buffer": 0.33,
+	"jump_cooldown": 0.20,
+	"jump_buffer": 0.20,
 	"short_hop": 0.10,
-	"coyote_time": 0.11
+	"coyote_time": 0.10
 }
 var timers := {}
 
@@ -92,8 +93,8 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	input_x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 	input_y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
 
-	var jump_held := Input.is_action_pressed("jump") or Input.is_action_pressed("up")
-	if Input.is_action_just_pressed("jump") or  Input.is_action_just_pressed("up"):
+	var jump_held := Input.is_action_pressed("jump")
+	if Input.is_action_just_pressed("jump"):
 		start_timer("jump_buffer")
 
 	# Handle movement
@@ -142,7 +143,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		clear_timer("coyote_time")
 
 	if dy < 0:
-		if !jump_held and timer_done("short_hop"):
+		if !jump_held and timer_done("short_hop") and !grounded:
 			dy += jump_let_go_fall_spd 
 
 	if coasting and abs(dx) < x_spd_deadzone:
@@ -150,9 +151,11 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 
 	dx += ddx
 	dy += grav_spd
+	
+	dy = min(dy, max_grav)
 
 	dx += ground_velocity.x
-
+	
 	if input_x > 0:
 		facing = Vector2.RIGHT
 	elif input_x < 0:

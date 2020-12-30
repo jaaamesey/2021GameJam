@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -22,7 +22,11 @@
 friction = 0.0
 
 [sub_resource type="RayShape2D" id=10]
+custom_solver_bias = 1.0
 length = 16.0
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 2.72004
@@ -67,12 +71,11 @@ height = 10.3406
 
 [node name="player" type="RigidBody2D"]
 mode = 2
-mass = 61.21
+mass = 60.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 custom_integrator = true
 continuous_cd = 2
-contacts_reported = 20
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 1 )
@@ -97,9 +100,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="RayCollider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
 shape = SubResource( 10 )
+
+[node name="RayCollider5" type="CollisionShape2D" parent="."]
+position = Vector2( 8, -16 )
+shape = SubResource( 10 )
+
+[node name="RayCollider6" type="CollisionShape2D" parent="."]
+position = Vector2( -8, -16 )
+shape = SubResource( 10 )
+
+[node name="RayCollider7" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+rotation = 1.5708
+shape = SubResource( 10 )
+
+[node name="RayCollider8" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+rotation = 4.71239
+shape = SubResource( 10 )
+
+[node name="RayCollider9" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -6.27714 )
+rotation = 1.5708
+shape = SubResource( 10 )
+
+[node name="RayCollider10" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -6.27714 )
+rotation = 4.71239
+shape = SubResource( 10 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+rotation = -3.14159
+shape = SubResource( 11 )
 
 [node name="DigHitbox" type="Area2D" parent="."]
 visible = false
