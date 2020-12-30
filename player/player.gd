@@ -36,7 +36,7 @@ onready var timer_times := {
 	"short_hop": 0.10,
 	"coyote_time": 0.10,
 	"wall_coyote_time": 0.10,
-	"ground_pound_freeze": 0.3
+	"ground_pound_freeze": 0.22
 }
 var timers := {}
 
@@ -125,7 +125,10 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if grounded:
 		dx -= prev_ground_velocity.x
 		last_wall_jump_dir = 0 # Reset wall jumps
-		in_ground_pound = false
+		if in_ground_pound: 
+			in_ground_pound = false
+			$Camera2D.schedule_shake(0.26, 0.05)
+			$Camera2D.schedule_shake(0.3, 0.14)
 
 	var accel_spd := ground_accel_spd
 	if !grounded:

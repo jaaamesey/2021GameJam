@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
 [ext_resource path="res://player/sprite.gd" type="Script" id=3]
+[ext_resource path="res://player/camera.gd" type="Script" id=4]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0003.png" type="Texture" id=11]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0004.png" type="Texture" id=12]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0005.png" type="Texture" id=13]
@@ -80,6 +81,7 @@ physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 custom_integrator = true
 continuous_cd = 2
+contacts_reported = 20
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 1 )
@@ -182,6 +184,7 @@ smoothing_enabled = true
 smoothing_speed = 10.0
 drag_margin_top = 1.0
 drag_margin_bottom = 1.0
+script = ExtResource( 4 )
 
 [node name="DebugSprite" type="Sprite" parent="."]
 visible = false
