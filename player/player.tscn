@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -21,12 +21,16 @@
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 
-[sub_resource type="RayShape2D" id=10]
+[sub_resource type="RayShape2D" id=12]
 custom_solver_bias = 1.0
 length = 16.0
 
+[sub_resource type="RayShape2D" id=10]
+custom_solver_bias = 1.0
+length = 14.0
+
 [sub_resource type="CircleShape2D" id=11]
-radius = 8.0
+radius = 7.31357
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 2.72004
@@ -102,15 +106,30 @@ __meta__ = {
 
 [node name="RayCollider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
-shape = SubResource( 10 )
+shape = SubResource( 12 )
+
+[node name="RayCollider2" type="CollisionShape2D" parent="."]
+position = Vector2( 8, -16 )
+shape = SubResource( 12 )
+
+[node name="RayCollider3" type="CollisionShape2D" parent="."]
+position = Vector2( -8, -16 )
+shape = SubResource( 12 )
+
+[node name="RayCollider4" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -11.8378 )
+rotation = 3.14159
+shape = SubResource( 12 )
 
 [node name="RayCollider5" type="CollisionShape2D" parent="."]
-position = Vector2( 8, -16 )
-shape = SubResource( 10 )
+position = Vector2( 8, -11.8378 )
+rotation = 3.14159
+shape = SubResource( 12 )
 
 [node name="RayCollider6" type="CollisionShape2D" parent="."]
-position = Vector2( -8, -16 )
-shape = SubResource( 10 )
+position = Vector2( -8, -11.8378 )
+rotation = 3.14159
+shape = SubResource( 12 )
 
 [node name="RayCollider7" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
@@ -119,6 +138,16 @@ shape = SubResource( 10 )
 
 [node name="RayCollider8" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
+rotation = 4.71239
+shape = SubResource( 10 )
+
+[node name="RayCollider11" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -24.3039 )
+rotation = 1.5708
+shape = SubResource( 10 )
+
+[node name="RayCollider12" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -24.3039 )
 rotation = 4.71239
 shape = SubResource( 10 )
 
@@ -133,7 +162,7 @@ rotation = 4.71239
 shape = SubResource( 10 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -16 )
+position = Vector2( 0, -18.6875 )
 rotation = -3.14159
 shape = SubResource( 11 )
 

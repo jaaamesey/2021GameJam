@@ -79,8 +79,9 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		if body == self:
 			continue
 		collisions.append(body)
-		var floor_normal := state.get_contact_local_normal(i)
-		if floor_normal.dot(Vector2(0, -1)) > 0.6:
+		var normal := state.get_contact_local_normal(i)
+		var threshold = 0.6
+		if normal.dot(Vector2.UP) > threshold:
 			grounded = true
 			if body is RigidBody2D and abs(body.linear_velocity.x) > abs(ground_velocity.x):
 				ground_velocity.x = body.linear_velocity.x
