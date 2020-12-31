@@ -263,7 +263,6 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	
 	# Ground pound logic (if down held down)
 	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and timer_done("ground_pound_landing") and input_y > 0 and !timer_done("attack_buffer"):
-		print('hi')
 		in_ground_pound = true
 		start_timer("ground_pound_freeze")
 		clear_timer("attack_buffer")
@@ -280,6 +279,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		
 	if !in_ground_pound and timer_done("ground_slide") and !attacking and !timer_done("attack_buffer"):
 		attacking = true
+		clear_timer("attack_buffer")
 		if grounded:
 			if input_y > 0:
 				start_timer("ground_slide")
