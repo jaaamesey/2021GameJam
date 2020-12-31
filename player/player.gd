@@ -248,7 +248,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		facing = Vector2.LEFT
 		
 	# Ground pound logic (if down held down)
-	if ground_pound_spd > 0 and !grounded and !in_ground_pound and Input.is_action_just_pressed("down"):
+	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and input_y > 0 and Input.is_action_pressed("attack"):
 		in_ground_pound = true
 		start_timer("ground_pound_freeze")
 	
