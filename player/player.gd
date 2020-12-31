@@ -197,7 +197,11 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 			elif last_wall_slide_dir == 1:
 				wall_jump_dir = -1
 			
-			var can_wall_jump = wall_jump_dir != 0 #and last_wall_jump_dir != wall_jump_dir 
+			var facing_right := facing == Vector2.RIGHT or input_x > 0
+			var facing_left := facing == Vector2.LEFT or input_x < 0
+			var facing_away_from_wall := (facing_right and wall_jump_dir == 1) or (facing_left and wall_jump_dir == -1)
+			
+			var can_wall_jump := facing_away_from_wall and wall_jump_dir != 0 #and last_wall_jump_dir != wall_jump_dir 
 			
 			if can_wall_jump and (was_inputting_x_during_wall_slide or input_x != 0):
 				# Perform wall jump
