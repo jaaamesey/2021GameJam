@@ -5,7 +5,7 @@ var dirt_fx := preload("res://fx/Dirt Crumbles/dirt.tscn")
 
 var x_spd_deadzone := 3.0
 
-var ground_accel_spd := 2.4
+var ground_accel_spd := 3.0
 var air_accel_spd := 2.4
 var max_spd := 270.0
 var ground_friction := 3.0
