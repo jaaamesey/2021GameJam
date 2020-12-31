@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/jamie_do_something.png-311f96ace9dc035d301244d1dd0d0496.stex"
+path="res://.import/semisolid.png-4fe8579593ba35ba7710032cb739e093.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tiles/spr/jamie_do_something.png"
-dest_files=[ "res://.import/jamie_do_something.png-311f96ace9dc035d301244d1dd0d0496.stex" ]
+source_file="res://tiles/spr/semisolid.png"
+dest_files=[ "res://.import/semisolid.png-4fe8579593ba35ba7710032cb739e093.stex" ]
 
 [params]
 

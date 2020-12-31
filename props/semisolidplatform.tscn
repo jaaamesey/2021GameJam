@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tiles/spr/semisolid-ninepatch.png" type="Texture" id=1]
+[ext_resource path="res://props/semisolidplatform.gd" type="Script" id=2]
+
+[sub_resource type="SegmentShape2D" id=1]
+b = Vector2( 104, 0 )
+
+[node name="SemiSolidPlatform" type="Control"]
+margin_right = 104.0
+margin_bottom = 16.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Guide" type="NinePatchRect" parent="."]
+modulate = Color( 0, 1, 0.0627451, 0.705882 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -0.000427246
+margin_bottom = 16.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 8, 32 )
+patch_margin_left = 4
+patch_margin_top = 16
+patch_margin_right = 4
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Guide2" type="NinePatchRect" parent="."]
+process_priority = -99
+modulate = Color( 0, 0.976471, 0.976471, 0.705882 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 16.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 8, 32 )
+patch_margin_left = 4
+patch_margin_top = 16
+patch_margin_right = 4
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatch" type="NinePatchRect" parent="."]
+process_priority = -99
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.00432587
+margin_bottom = 16.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 8, 32 )
+patch_margin_left = 4
+patch_margin_top = 16
+patch_margin_right = 4
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RigidBody2D" type="RigidBody2D" parent="NinePatch"]
+collision_layer = 2050
+collision_mask = 2050
+mode = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NinePatch/RigidBody2D"]
+shape = SubResource( 1 )

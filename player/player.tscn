@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
 [ext_resource path="res://player/sprite.gd" type="Script" id=3]
 [ext_resource path="res://player/camera.gd" type="Script" id=4]
+[ext_resource path="res://src/semisolidplatformhandler.tscn" type="PackedScene" id=5]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0003.png" type="Texture" id=11]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0004.png" type="Texture" id=12]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0005.png" type="Texture" id=13]
@@ -22,18 +23,18 @@
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 
-[sub_resource type="RayShape2D" id=12]
+[sub_resource type="RayShape2D" id=10]
 custom_solver_bias = 1.0
 length = 16.0
 
-[sub_resource type="RayShape2D" id=10]
+[sub_resource type="RayShape2D" id=11]
 custom_solver_bias = 1.0
 length = 14.0
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=12]
 radius = 7.31357
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=13]
 radius = 2.72004
 
 [sub_resource type="Gradient" id=6]
@@ -49,11 +50,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 20 ), ExtResource( 22 ) ],
 "loop": true,
 "name": "dig",
@@ -68,6 +64,11 @@ animations = [ {
 "loop": true,
 "name": "jump",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=9]
@@ -108,72 +109,72 @@ __meta__ = {
 
 [node name="RayCollider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider2" type="CollisionShape2D" parent="."]
 position = Vector2( 8, -16 )
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider3" type="CollisionShape2D" parent="."]
 position = Vector2( -8, -16 )
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider4" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -11.8378 )
 rotation = 3.14159
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider5" type="CollisionShape2D" parent="."]
 position = Vector2( 8, -11.8378 )
 rotation = 3.14159
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider6" type="CollisionShape2D" parent="."]
 position = Vector2( -8, -11.8378 )
 rotation = 3.14159
-shape = SubResource( 12 )
+shape = SubResource( 10 )
 
 [node name="RayCollider7" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="RayCollider8" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
 rotation = 4.71239
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="RayCollider11" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -24.3039 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="RayCollider12" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -24.3039 )
 rotation = 4.71239
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="RayCollider9" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -6.27714 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="RayCollider10" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -6.27714 )
 rotation = 4.71239
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -18.6875 )
 rotation = -3.14159
-shape = SubResource( 11 )
+shape = SubResource( 12 )
 
 [node name="DigHitbox" type="Area2D" parent="."]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DigHitbox"]
 position = Vector2( 0, -45.5504 )
-shape = SubResource( 4 )
+shape = SubResource( 13 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -64 )
@@ -209,3 +210,5 @@ shape = SubResource( 9 )
 [node name="DigIndicator" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 24 )
+
+[node name="SemiSolidPlatformHandler" parent="." instance=ExtResource( 5 )]
