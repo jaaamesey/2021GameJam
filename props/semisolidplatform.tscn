@@ -9,6 +9,7 @@ b = Vector2( 104, 0 )
 [node name="SemiSolidPlatform" type="Control"]
 margin_right = 104.0
 margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
