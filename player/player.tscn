@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://player/spr/jump/fall.png" type="Texture" id=7]
 [ext_resource path="res://player/spr/jump/rise.png" type="Texture" id=8]
 [ext_resource path="res://player/spr/slid.png" type="Texture" id=9]
+[ext_resource path="res://player/spr/speen.png" type="Texture" id=10]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0003.png" type="Texture" id=11]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0004.png" type="Texture" id=12]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0005.png" type="Texture" id=13]
@@ -71,6 +72,22 @@ region = Rect2( 128, 0, 64, 32 )
 atlas = ExtResource( 6 )
 region = Rect2( 192, 0, 64, 32 )
 
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 32, 64 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 10 )
+region = Rect2( 32, 0, 32, 64 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 10 )
+region = Rect2( 64, 0, 32, 64 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 10 )
+region = Rect2( 96, 0, 32, 64 )
+
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 9 ) ],
@@ -102,6 +119,11 @@ animations = [ {
 "loop": true,
 "name": "dig",
 "speed": 15.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": false,
+"name": "speen",
+"speed": 10.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=9]
@@ -229,7 +251,7 @@ texture = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
 frames = SubResource( 8 )
-animation = "slide"
+animation = "speen"
 script = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]

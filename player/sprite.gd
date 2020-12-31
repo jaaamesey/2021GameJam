@@ -39,6 +39,10 @@ func _physics_process(delta: float) -> void:
 
 	if player.doing_wall_slide:
 		next_anim = "slide"
+		
+	if player.in_ground_pound or !player.timer_done("ground_pound_landing"):
+		next_anim = "speen"
+		flip_h = false
 
 	if animation == "walk" and next_anim == "idle":
 		if not frame in [0, 2, 4]:
