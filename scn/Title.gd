@@ -17,4 +17,4 @@ func _input(event: InputEvent) -> void:
 
 func go_to_next():
 	yield(get_tree().create_timer(2), "timeout")
-	get_tree().change_scene("res://scn/levels/template.tscn")
+	get_tree().change_scene("res://scn/levels/actual_template.tscn")
