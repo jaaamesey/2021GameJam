@@ -37,8 +37,8 @@ func _physics_process(delta: float) -> void:
 		if player.linear_velocity.y < 0:
 			next_anim = "jump"
 
-	if player.facing == Vector2.DOWN:
-		reset_to_h()
+	if player.doing_wall_slide:
+		next_anim = "slide"
 
 	if animation == "walk" and next_anim == "idle":
 		if not frame in [0, 2, 4]:
@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 		if player.facing.y != 0:
 			spd = player.linear_velocity.y
 		speed_scale = clamp(abs(spd) / 200.0, 0.6, 1.5)
-
+	
 	speed_scale *= speed_scale_mod
 
 	if animation != next_anim and time_since_last_anim > 0.12:

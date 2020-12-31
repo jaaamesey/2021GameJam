@@ -26,7 +26,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="WombatGame"
+config/name="Swift Saber: A Gunblade Adventure"
 run/main_scene="res://scn/Title.tscn"
 boot_splash/use_filter=false
 config/icon="res://icon.png"

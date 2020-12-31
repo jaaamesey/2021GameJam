@@ -45,6 +45,7 @@ var grounded := false
 var prev_ground_velocity := Vector2()
 var last_wall_slide_dir := 0
 var last_wall_jump_dir := 0
+var doing_wall_slide := false
 var was_inputting_x_during_wall_slide := false
 
 var facing := Vector2.RIGHT
@@ -225,7 +226,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	dx += ddx
 	
 	var grav_spd_mod = 1.0
-	var doing_wall_slide = dy > 0 and wall_slide_dir != 0 and sign(wall_slide_dir) == sign(input_x)
+	doing_wall_slide = dy > 0 and wall_slide_dir != 0 and sign(wall_slide_dir) == sign(input_x)
 	if doing_wall_slide:
 		grav_spd_mod *= wall_slide_slowdown
 		

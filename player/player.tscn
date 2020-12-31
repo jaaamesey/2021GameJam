@@ -1,10 +1,14 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
 [ext_resource path="res://player/sprite.gd" type="Script" id=3]
 [ext_resource path="res://player/camera.gd" type="Script" id=4]
 [ext_resource path="res://src/semisolidplatformhandler.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/spr/walk/anime.png" type="Texture" id=6]
+[ext_resource path="res://player/spr/jump/fall.png" type="Texture" id=7]
+[ext_resource path="res://player/spr/jump/rise.png" type="Texture" id=8]
+[ext_resource path="res://player/spr/slid.png" type="Texture" id=9]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0003.png" type="Texture" id=11]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0004.png" type="Texture" id=12]
 [ext_resource path="res://player/spr/dig/Wombat Dig_0005.png" type="Texture" id=13]
@@ -43,24 +47,53 @@ radius = 2.72004
 gradient = SubResource( 6 )
 width = 161
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 64, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 6 )
+region = Rect2( 64, 0, 64, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 6 )
+region = Rect2( 128, 0, 64, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 6 )
+region = Rect2( 192, 0, 64, 32 )
+
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "idle",
+"name": "slide",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "idle",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "walk",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "fall",
 "speed": 5.0
@@ -196,7 +229,7 @@ texture = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
 frames = SubResource( 8 )
-animation = "idle"
+animation = "slide"
 script = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]
