@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -24,6 +24,8 @@
 [ext_resource path="res://player/spr/dig/Wombat Dig_0011.png" type="Texture" id=22]
 [ext_resource path="res://bg/Background.png" type="Texture" id=23]
 [ext_resource path="res://player/spr/dig_indicator.png" type="Texture" id=24]
+[ext_resource path="res://player/spr/ground_slash.png" type="Texture" id=25]
+[ext_resource path="res://player/spr/air_slash.png" type="Texture" id=26]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -88,6 +90,42 @@ region = Rect2( 64, 0, 32, 64 )
 atlas = ExtResource( 10 )
 region = Rect2( 96, 0, 32, 64 )
 
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 25 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 25 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 25 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 25 )
+region = Rect2( 192, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 25 )
+region = Rect2( 256, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 26 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 26 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 26 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 26 )
+region = Rect2( 192, 0, 64, 64 )
+
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 9 ) ],
@@ -124,6 +162,16 @@ animations = [ {
 "loop": false,
 "name": "speen",
 "speed": 10.0
+}, {
+"frames": [ SubResource( 28 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 32 ) ],
+"loop": false,
+"name": "ground_slash",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
+"loop": true,
+"name": "air_slash",
+"speed": 15.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=9]
@@ -251,7 +299,7 @@ texture = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
 frames = SubResource( 8 )
-animation = "speen"
+animation = "idle"
 script = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]
@@ -267,3 +315,4 @@ visible = false
 texture = ExtResource( 24 )
 
 [node name="SemiSolidPlatformHandler" parent="." instance=ExtResource( 5 )]
+[connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]

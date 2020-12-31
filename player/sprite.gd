@@ -43,7 +43,13 @@ func _physics_process(delta: float) -> void:
 	if player.in_ground_pound or !player.timer_done("ground_pound_landing"):
 		next_anim = "speen"
 		flip_h = false
-
+		
+	if player.attacking:
+		if player.grounded:
+			next_anim = "ground_slash"
+		else:
+			next_anim = "air_slash"
+		
 	if animation == "walk" and next_anim == "idle":
 		if not frame in [0, 2, 4]:
 			next_anim = "walk"
@@ -69,3 +75,8 @@ func reset_to_h():
 		flip_h = true
 	else:
 		flip_h = false
+
+
+func _on_AnimatedSprite_animation_finished():
+	if animation == "ground_slash" or animation == "air_slash":
+		player.attacking = false

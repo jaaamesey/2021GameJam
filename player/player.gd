@@ -59,7 +59,7 @@ var last_input_x := 1
 
 var in_ground_pound := false
 
-var has_dug := false
+var attacking := true
 
 var is_dead := false
 
@@ -106,6 +106,11 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	# If just left ground
 	if prev_grounded and !grounded:
 		start_timer("coyote_time")
+		attacking = false
+	
+	# If just hit ground
+	if !prev_grounded and grounded:
+		attacking = false
 		
 	# Handle input
 	input_x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
@@ -249,7 +254,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		facing = Vector2.RIGHT
 	elif input_x < 0:
 		facing = Vector2.LEFT
-		
+	
 	# Ground pound logic (if down held down)
 	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and timer_done("ground_pound_landing") and input_y > 0 and Input.is_action_pressed("attack"):
 		in_ground_pound = true
@@ -264,6 +269,11 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	
 	if !timer_done("ground_pound_landing") and grounded:
 		dx = 0
+		
+	if !in_ground_pound and !attacking and Input.is_action_just_pressed("attack"):
+		attacking = true
+		if grounded:
+			dx *= 0.5
 
 	state.linear_velocity = Vector2(dx, dy)
 	prev_ground_velocity = ground_velocity
