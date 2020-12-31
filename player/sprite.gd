@@ -27,9 +27,6 @@ func _physics_process(delta: float) -> void:
 	if (player.can_jump() or player.grounded) and (abs(player.input_x) > 0 or abs(player.linear_velocity.x) > 70):
 		next_anim = "walk"
 
-	if abs(player.input_y) > 0:
-		next_anim = "walk"
-
 	if !player.grounded:
 		next_anim = "fall"
 		reset_to_h()
@@ -47,6 +44,8 @@ func _physics_process(delta: float) -> void:
 	if player.attacking:
 		if player.grounded:
 			next_anim = "ground_slash"
+			if !player.timer_done("ground_slide"):
+				next_anim = "ground_slide"
 		else:
 			next_anim = "air_slash"
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://player/spr/dig_indicator.png" type="Texture" id=24]
 [ext_resource path="res://player/spr/ground_slash.png" type="Texture" id=25]
 [ext_resource path="res://player/spr/air_slash.png" type="Texture" id=26]
+[ext_resource path="res://player/spr/ground_slide.png" type="Texture" id=27]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -163,6 +164,11 @@ animations = [ {
 "name": "speen",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 27 ) ],
+"loop": true,
+"name": "ground_slide",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 28 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 32 ) ],
 "loop": false,
 "name": "ground_slash",
@@ -299,7 +305,7 @@ texture = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
 frames = SubResource( 8 )
-animation = "idle"
+animation = "ground_slide"
 script = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]

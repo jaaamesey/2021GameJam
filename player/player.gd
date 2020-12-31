@@ -37,7 +37,9 @@ onready var timer_times := {
 	"coyote_time": 0.10,
 	"wall_coyote_time": 0.10,
 	"ground_pound_freeze": 0.4,
-	"ground_pound_landing": 0.4
+	"ground_pound_landing": 0.4,
+	"ground_slide": 0.4,
+	"attack_buffer": 0.18
 }
 var timers := {}
 
@@ -58,6 +60,7 @@ var input_y := 0
 var last_input_x := 1
 
 var in_ground_pound := false
+var in_ground_slide := false
 
 var attacking := true
 
@@ -254,11 +257,16 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		facing = Vector2.RIGHT
 	elif input_x < 0:
 		facing = Vector2.LEFT
+		
+	if Input.is_action_just_pressed("attack"):
+		start_timer("attack_buffer")
 	
 	# Ground pound logic (if down held down)
-	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and timer_done("ground_pound_landing") and input_y > 0 and Input.is_action_pressed("attack"):
+	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and timer_done("ground_pound_landing") and input_y > 0 and !timer_done("attack_buffer"):
+		print('hi')
 		in_ground_pound = true
 		start_timer("ground_pound_freeze")
+		clear_timer("attack_buffer")
 	
 	if in_ground_pound:
 		dx = 0
@@ -270,11 +278,24 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if !timer_done("ground_pound_landing") and grounded:
 		dx = 0
 		
-	if !in_ground_pound and !attacking and Input.is_action_just_pressed("attack"):
+	if !in_ground_pound and timer_done("ground_slide") and !attacking and !timer_done("attack_buffer"):
 		attacking = true
 		if grounded:
-			dx *= 0.5
-
+			if input_y > 0:
+				start_timer("ground_slide")
+				in_ground_slide = true
+				if facing.x > 0:
+					dx = max(300 * facing.x, 100 * facing.x + dx)
+				else:
+					dx = min(300 * facing.x, 100 * facing.x + dx)
+				
+			else:
+				dx *= 0.5
+	
+	if in_ground_slide and timer_done("ground_slide"):
+		attacking = false
+		in_ground_slide = false
+	
 	state.linear_velocity = Vector2(dx, dy)
 	prev_ground_velocity = ground_velocity
 
