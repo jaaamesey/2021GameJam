@@ -277,7 +277,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if !timer_done("ground_pound_landing") and grounded:
 		dx = 0
 		
-	if !in_ground_pound and timer_done("ground_slide") and !attacking and !timer_done("attack_buffer"):
+	if !in_ground_pound and timer_done("ground_slide") and !attacking and !timer_done("attack_buffer") and !doing_wall_slide:
 		attacking = true
 		clear_timer("attack_buffer")
 		if grounded:
