@@ -135,7 +135,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if grounded:
 		dx -= prev_ground_velocity.x
 		last_wall_jump_dir = 0 # Reset wall jumps
-		if in_ground_pound: 
+		if in_ground_pound and timer_done("ground_pound_freeze"): 
 			in_ground_pound = false
 			start_timer("ground_pound_landing")
 			$Camera2D.schedule_shake(0.26, 0.05)
@@ -277,7 +277,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if !timer_done("ground_pound_landing") and grounded:
 		dx = 0
 		
-	if !in_ground_pound and timer_done("ground_slide") and !attacking and !timer_done("attack_buffer") and !doing_wall_slide:
+	if !in_ground_pound and timer_done("ground_slide") and !attacking  and !doing_wall_slide and timer_done("ground_pound_landing") and !timer_done("attack_buffer"):
 		attacking = true
 		clear_timer("attack_buffer")
 		if grounded:
@@ -285,9 +285,9 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 				start_timer("ground_slide")
 				in_ground_slide = true
 				if facing.x > 0:
-					dx = max(300 * facing.x, 100 * facing.x + dx)
+					dx = max(300 * facing.x, 120 * facing.x + dx)
 				else:
-					dx = min(300 * facing.x, 100 * facing.x + dx)
+					dx = min(300 * facing.x, 120 * facing.x + dx)
 				
 			else:
 				dx *= 0.5
