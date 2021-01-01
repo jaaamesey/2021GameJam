@@ -28,6 +28,9 @@ var wall_jump_pushback := 200.0
 
 var ground_pound_spd := 400.0
 
+var ground_slide_additional_spd := 120 # Speed to add when using ground slide
+var min_ground_slide_spd := 300.0 # Minimum speed when using ground slide (this will usually come up when stationary)
+
 var wait_to_dig_time := 0.134
 
 onready var timer_times := {
@@ -262,7 +265,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		start_timer("attack_buffer")
 	
 	# Ground pound logic (if down held down)
-	if ground_pound_spd > 0 and !grounded and !in_ground_pound and timer_done("short_hop") and timer_done("ground_pound_landing") and input_y > 0 and !timer_done("attack_buffer"):
+	if can_ground_pound() and input_y > 0 and !timer_done("attack_buffer"):
 		in_ground_pound = true
 		start_timer("ground_pound_freeze")
 		clear_timer("attack_buffer")
@@ -277,17 +280,19 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if !timer_done("ground_pound_landing") and grounded:
 		dx = 0
 		
-	if !in_ground_pound and timer_done("ground_slide") and !attacking  and !doing_wall_slide and timer_done("ground_pound_landing") and !timer_done("attack_buffer"):
+	if can_attack() and !timer_done("attack_buffer"):
 		attacking = true
 		clear_timer("attack_buffer")
 		if grounded:
 			if input_y > 0:
 				start_timer("ground_slide")
 				in_ground_slide = true
+				var min_slide_velocity := min_ground_slide_spd * facing.x
+				var max_slide_velocity := ground_slide_additional_spd * facing.x + dx
 				if facing.x > 0:
-					dx = max(300 * facing.x, 120 * facing.x + dx)
+					dx = max(min_slide_velocity, max_slide_velocity)
 				else:
-					dx = min(300 * facing.x, 120 * facing.x + dx)
+					dx = min(min_slide_velocity, max_slide_velocity)
 				
 			else:
 				dx *= 0.5
@@ -301,6 +306,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 
 	if input_x != 0:
 		last_input_x = input_x
+	
 
 func kill():
 	ScreenFX.black_dir = 3.0
@@ -315,6 +321,26 @@ func can_jump():
 		return true
 	return false
 
+func can_attack():
+	if in_ground_pound or !timer_done("ground_pound_landing"):
+		return false
+	if attacking or !timer_done("ground_slide"):
+		return false
+	if doing_wall_slide:
+		return false
+	return true
+	
+func can_ground_pound():
+	if in_ground_pound or !timer_done("ground_pound_landing"):
+		return false
+	if attacking or !timer_done("ground_slide"):
+		return false
+	if ground_pound_spd <= 0:
+		return false
+	if grounded:
+		return false
+	return true
+	
 func timer_done(timer):
 	return timers[timer] <= 0
 
