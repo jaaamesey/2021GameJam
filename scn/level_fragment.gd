@@ -8,7 +8,7 @@ onready var tilemap_rect_size: Vector2 = tilemap.get_used_rect().size
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if owner == null:
+	if get_parent().name != "Endless":
 		return
 	remove_child($GUIDES)
 	remove_child($player)
