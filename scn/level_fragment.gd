@@ -2,6 +2,7 @@ class_name LevelFragment
 extends Node2D
 
 export(float, 0, 10) var difficulty := 0.0
+export var enabled := true
 
 onready var tilemap: TileMap = $TileMap
 onready var tilemap_rect_size: Vector2 = tilemap.get_used_rect().size
@@ -12,8 +13,3 @@ func _ready():
 		return
 	remove_child($GUIDES)
 	remove_child($player)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

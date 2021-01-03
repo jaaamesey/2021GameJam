@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
+}, {
+"base": "Control",
+"class": "SemiSolidPlatform",
+"language": "GDScript",
+"path": "res://props/semisolidplatform.gd"
 } ]
 _global_script_class_icons={
 "Boulder": "",
 "LevelFragment": "",
-"Player": ""
+"Player": "",
+"SemiSolidPlatform": ""
 }
 
 [application]

@@ -107,6 +107,10 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 			grounded = true
 			if body is RigidBody2D and abs(body.linear_velocity.x) > abs(ground_velocity.x):
 				ground_velocity.x = body.linear_velocity.x
+
+			if body.owner is SemiSolidPlatform and body.owner.activate_when_player_standing:
+				body.owner.activated = true
+
 	
 
 	# If just left ground

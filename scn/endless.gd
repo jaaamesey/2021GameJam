@@ -34,7 +34,10 @@ func load_fragments():
 	var fragment_strings := get_files(fragments_path)
 	for file_name in fragment_strings:
 		var scene := load(fragments_path + "/" + file_name)
-		fragments.push_back(scene.instance())
+		var instanced_scene: LevelFragment = scene.instance()
+		if !instanced_scene.enabled:
+			continue
+		fragments.push_back(instanced_scene)
 	
 	# Re-order fragments from least to most difficult
 	fragments.sort_custom(LevelSorter, "sort_by_difficulty_asc")	
