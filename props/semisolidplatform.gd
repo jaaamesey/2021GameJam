@@ -35,12 +35,18 @@ func _ready():
 			set_process(false)
 			
 
+# Only runs in editor
 func _process(delta):
 	$Guide2.rect_position = Vector2()
 	$Guide.rect_position = Vector2(target_x_offset, target_y_offset)
 	$StartingPos.rect_position.x = lerp(0, target_x_offset, starting_pos)
 	$StartingPos.rect_position.y = lerp(0, target_y_offset, starting_pos)
 	collision_shape.shape.b.x = rect_size.x
+	
+	if activate_when_player_standing:
+		activated = false
+	else:
+		activated = true
 		
 	
 func _physics_process(delta):
