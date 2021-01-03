@@ -8,7 +8,7 @@ export(float, 0.0, 1.0) var starting_pos := 0.0
 export(float, 0.01, 10) var seconds := 1.0
 export var smooth := false
 export var activate_when_player_standing := false
-var lerp_pos := starting_pos
+onready var lerp_pos := starting_pos
 var dir := 1
 
 var activated := true
@@ -29,6 +29,7 @@ func _ready():
 	else:
 		$Guide.visible = false
 		$Guide2.visible = false
+		$StartingPos.visible = false
 		set_process(false)
 		if target_x_offset == 0:
 			set_process(false)
@@ -37,12 +38,14 @@ func _ready():
 func _process(delta):
 	$Guide2.rect_position = Vector2()
 	$Guide.rect_position = Vector2(target_x_offset, target_y_offset)
+	$StartingPos.rect_position.x = lerp(0, target_x_offset, starting_pos)
+	$StartingPos.rect_position.y = lerp(0, target_y_offset, starting_pos)
 	collision_shape.shape.b.x = rect_size.x
+		
 	
 func _physics_process(delta):
-	if !activated: return
-	
-	lerp_pos += dir * (1.0 / seconds) * delta
+	if activated: lerp_pos += dir * (1.0 / seconds) * delta
+	elif Engine.editor_hint: lerp_pos = starting_pos
 	
 	if lerp_pos >= 1.0: dir = -1
 	elif lerp_pos <= 0.0: dir = 1

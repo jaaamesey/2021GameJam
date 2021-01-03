@@ -108,6 +108,5 @@ margin_top = 204.0
 margin_right = 1172.0
 margin_bottom = 220.0
 target_x_offset = 776.717
-starting_pos = 1.0
 seconds = 4.88
 activate_when_player_standing = true
