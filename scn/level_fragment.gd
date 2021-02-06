@@ -13,3 +13,4 @@ func _ready():
 		return
 	remove_child($GUIDES)
 	remove_child($player)
+	

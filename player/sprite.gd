@@ -114,15 +114,15 @@ func handle_squishing():
 			if abs(velocity.x) > 4.0:
 				squish_target = Vector2(1, 0)
 			if player.last_jump_floor_influence.y < -100:
-				squish_target = Vector2(5, -1)
+				squish_target = Vector2(2, -1)
 		squish = squish_target
 	else:
 		squish = lerp(squish, squish_target, lerp_amt)
 		
 
-	scale = (0.9 * Vector2.ONE) + 0.15 * squish
+	scale = (0.95 * Vector2.ONE) + 0.07 * squish
 
-	var extra_y_offset = 2 * (max(16 - (scale.y * 16), 0))
+	var extra_y_offset := 2 * (max(16 - (scale.y * 16), 0))
 	offset.y += extra_y_offset
 
 	last_velocity = velocity

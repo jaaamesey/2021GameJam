@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://player/spr/ground_slash.png" type="Texture" id=25]
 [ext_resource path="res://player/spr/air_slash.png" type="Texture" id=26]
 [ext_resource path="res://player/spr/ground_slide.png" type="Texture" id=27]
+[ext_resource path="res://player/projectiles.gd" type="Script" id=28]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -195,6 +196,9 @@ contacts_reported = 20
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 1 )
+
+[node name="Projectiles" type="Node2D" parent="."]
+script = ExtResource( 28 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -3
