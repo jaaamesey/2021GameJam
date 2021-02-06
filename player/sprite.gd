@@ -101,7 +101,7 @@ func handle_squishing():
 	
 	if animation == "slide":
 		if last_anim != "slide":
-			squish_target = Vector2(0, 4)
+			squish_target = Vector2(-1, 3)
 			squish = squish_target
 		else:
 			squish_target = Vector2.ONE

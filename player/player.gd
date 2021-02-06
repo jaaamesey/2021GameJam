@@ -67,7 +67,7 @@ var last_input_x := 1
 var in_ground_pound := false
 var in_ground_slide := false
 
-var attacking := true
+var attacking := false
 
 var is_dead := false
 
