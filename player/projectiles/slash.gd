@@ -4,7 +4,6 @@ var speed := 6.0
 var alive_time := 0.0
 
 func _ready():
-	global_rotation_degrees = 90
 	scale = Vector2(1.2, 1.2)
 	
 func _physics_process(delta):

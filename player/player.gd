@@ -301,10 +301,11 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		
 	dy = min(dy, max_grav)
 	
-	if input_x > 0:
-		facing = Vector2.RIGHT
-	elif input_x < 0:
-		facing = Vector2.LEFT
+	if !attacking:
+		if input_x > 0:
+			facing = Vector2.RIGHT
+		elif input_x < 0:
+			facing = Vector2.LEFT
 		
 	if Input.is_action_just_pressed("attack"):
 		start_timer("attack_buffer")
