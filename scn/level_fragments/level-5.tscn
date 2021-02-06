@@ -9,6 +9,9 @@
 script = ExtResource( 4 )
 difficulty = 3.009
 
+[node name="player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 59.7421, 315.148 )
+
 [node name="GUIDES" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -92,9 +95,6 @@ text = "Red bar: max width of level"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 59.7421, 315.148 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

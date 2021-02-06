@@ -33,6 +33,8 @@ var min_ground_slide_spd := 300.0 # Minimum speed when using ground slide (this 
 
 var wait_to_dig_time := 0.134
 
+var apply_floor_velocity_on_jump := true
+
 onready var timer_times := {
 	"jump_cooldown": 0.20,
 	"jump_buffer": 0.18,
@@ -42,13 +44,13 @@ onready var timer_times := {
 	"ground_pound_freeze": 0.4,
 	"ground_pound_landing": 0.4,
 	"ground_slide": 0.4,
-	"attack_buffer": 0.18
+	"attack_buffer": 0.18,
+	"store_floor_influence_y": 0.30
 }
 var timers := {}
 
 var grounded := false
 
-var prev_ground_velocity := Vector2()
 var last_wall_slide_dir := 0
 var last_wall_jump_dir := 0
 var doing_wall_slide := false
@@ -69,6 +71,15 @@ var attacking := true
 
 var is_dead := false
 
+var extra_velocity := Vector2()
+
+var floor_velocity := Vector2()
+
+var last_floor_body: RigidBody2D = null
+
+var stored_floor_influence_y := 0.0
+var last_jump_floor_influence := Vector2()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for key in timer_times:
@@ -78,7 +89,7 @@ func _ready() -> void:
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if is_dead:
-		linear_velocity = Vector2()
+		state.linear_velocity = Vector2()
 		return
 	if Input.is_action_just_released("reset"):
 		kill()
@@ -89,10 +100,17 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		timers[key] -= delta
 		timers[key] = clamp(timers[key], -1, timer_times[key])
 
+	if timer_done("store_floor_influence_y"):
+		stored_floor_influence_y = 0
+
 	# Ground check
 	var prev_grounded := grounded
-	var ground_velocity := Vector2()
 	grounded = false
+	
+	state.linear_velocity -= extra_velocity
+	floor_velocity = Vector2.ZERO
+	
+	var floor_body: RigidBody2D = null
 	
 	# Get collisions
 	var collisions := []
@@ -105,13 +123,23 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		var threshold = 0.6
 		if normal.dot(Vector2.UP) > threshold:
 			grounded = true
-			if body is RigidBody2D and abs(body.linear_velocity.x) > abs(ground_velocity.x):
-				ground_velocity.x = body.linear_velocity.x
-
+			if body is RigidBody2D and body.linear_velocity.length_squared() > floor_velocity.length_squared():
+				floor_velocity = body.linear_velocity
+				floor_body = body
+				if floor_velocity.y < stored_floor_influence_y:
+					stored_floor_influence_y = floor_velocity.y
+					start_timer("store_floor_influence_y")
+					
 			if body.owner is SemiSolidPlatform and body.owner.activate_when_player_standing:
 				body.owner.activated = true
 
-	
+	var using_last_floor_body := false
+	if false and floor_body == null and is_instance_valid(last_floor_body):
+		grounded = true
+		floor_velocity = last_floor_body.linear_velocity
+		floor_body = last_floor_body
+		using_last_floor_body = true
+		print(floor_velocity)
 
 	# If just left ground
 	if prev_grounded and !grounded:
@@ -140,7 +168,6 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	var dy := state.linear_velocity.y
 
 	if grounded:
-		dx -= prev_ground_velocity.x
 		last_wall_jump_dir = 0 # Reset wall jumps
 		if in_ground_pound and timer_done("ground_pound_freeze"): 
 			in_ground_pound = false
@@ -203,6 +230,19 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		if can_jump():
 			# Perform jump
 			dy = -jump_height
+			last_jump_floor_influence = Vector2()
+			if apply_floor_velocity_on_jump:
+				var floor_influence := Vector2()
+				floor_influence.x = floor_velocity.x
+				floor_influence.y = min(0, floor_velocity.y)
+				
+				if stored_floor_influence_y < floor_velocity.y:
+					floor_influence.y = stored_floor_influence_y
+
+				dx += floor_influence.x
+				dy += floor_influence.y
+				last_jump_floor_influence = floor_influence
+				floor_velocity = Vector2()
 
 			start_timer("jump_cooldown")
 			start_timer("short_hop")
@@ -227,6 +267,9 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 				dy = -wall_jump_height
 				
 				last_wall_jump_dir = wall_jump_dir
+				
+				# Can't wall jump on any moving platforms yet :(
+				last_jump_floor_influence = Vector2()
 				
 				start_timer("jump_cooldown")
 				start_timer("short_hop")
@@ -257,8 +300,6 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		
 		
 	dy = min(dy, max_grav)
-
-	dx += ground_velocity.x
 	
 	if input_x > 0:
 		facing = Vector2.RIGHT
@@ -304,9 +345,13 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	if in_ground_slide and timer_done("ground_slide"):
 		attacking = false
 		in_ground_slide = false
+		
+	extra_velocity = Vector2()
+	extra_velocity.x += floor_velocity.x
 	
-	state.linear_velocity = Vector2(dx, dy)
-	prev_ground_velocity = ground_velocity
+	state.linear_velocity = Vector2(dx, dy) + extra_velocity
+	
+	last_floor_body = floor_body
 
 	if input_x != 0:
 		last_input_x = input_x

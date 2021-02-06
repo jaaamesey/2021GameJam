@@ -6,8 +6,15 @@ var vertical_flip_v := false
 
 var frame_f := 0.0
 
+var last_velocity := Vector2()
+
 var time_since_last_anim := 0.0
+var last_anim := "idle"
+
+var squish := Vector2.ONE
+
 func _physics_process(delta: float) -> void:
+	last_anim = animation
 	time_since_last_anim += delta
 	playing = true
 	rotation_degrees = 0
@@ -23,8 +30,9 @@ func _physics_process(delta: float) -> void:
 			flip_h = true
 		Vector2.RIGHT:
 			pass
+			
 
-	if (player.can_jump() or player.grounded) and (abs(player.input_x) > 0 or abs(player.linear_velocity.x) > 70):
+	if (player.can_jump() or player.grounded) and (abs(player.input_x) > 0 or abs(player.linear_velocity.x - player.floor_velocity.x) > 80):
 		next_anim = "walk"
 
 	if !player.grounded:
@@ -61,10 +69,12 @@ func _physics_process(delta: float) -> void:
 		speed_scale = clamp(abs(spd) / 200.0, 0.6, 1.5)
 	
 	speed_scale *= speed_scale_mod
-
-	if animation != next_anim and time_since_last_anim > 0.12:
+	
+	if last_anim != next_anim and time_since_last_anim > 0.12:
 		animation = next_anim
 		time_since_last_anim = 0
+		
+	handle_squishing()
 
 func reset_to_h():
 	rotation_degrees = 0
@@ -75,6 +85,47 @@ func reset_to_h():
 	else:
 		flip_h = false
 
+func handle_squishing():
+	var velocity := player.linear_velocity
+	if player.grounded:
+		velocity.y = 0
+	var acceleration := last_velocity - velocity
+	var squish_target := acceleration.normalized()
+	squish_target = Vector2(abs(squish_target.x), abs(squish_target.y))
+	if squish_target.length_squared() < 0.99:
+		squish_target = Vector2.ONE
+		
+	var lerp_amt := 0.15
+	if abs(acceleration.x) > 4.0:
+		lerp_amt = 0.2
+	
+	if animation == "slide":
+		if last_anim != "slide":
+			squish_target = Vector2(0, 4)
+			squish = squish_target
+		else:
+			squish_target = Vector2.ONE
+			squish = lerp(squish, squish_target, 0.09)
+	elif !player.timer_done("jump_cooldown"):
+		if player.last_wall_jump_dir != 0:
+			# If wall jump
+			squish_target = Vector2(1.5, -1.0)
+		else:
+			if abs(velocity.x) > 4.0:
+				squish_target = Vector2(1, 0)
+			if player.last_jump_floor_influence.y < -100:
+				squish_target = Vector2(5, -1)
+		squish = squish_target
+	else:
+		squish = lerp(squish, squish_target, lerp_amt)
+		
+
+	scale = (0.9 * Vector2.ONE) + 0.15 * squish
+
+	var extra_y_offset = 2 * (max(16 - (scale.y * 16), 0))
+	offset.y += extra_y_offset
+
+	last_velocity = velocity
 
 func _on_AnimatedSprite_animation_finished():
 	if animation == "ground_slash" or animation == "air_slash":

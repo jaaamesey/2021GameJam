@@ -6,6 +6,9 @@
 [node name="Endless" type="Node2D"]
 script = ExtResource( 1 )
 
+[node name="player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 23.9035, 232.104 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
@@ -25,9 +28,6 @@ text = "20000m travelled
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 23.9035, 232.104 )
 
 [node name="KillRect" type="ColorRect" parent="."]
 margin_left = -310.71
