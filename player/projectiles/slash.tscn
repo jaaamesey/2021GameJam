@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/spr/projectiles/slash.png" type="Texture" id=1]
 [ext_resource path="res://player/projectiles/slash.gd" type="Script" id=2]
+[ext_resource path="res://spr/light1.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=2]
+blend_mode = 1
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 1.93347
 
 [node name="Slash" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="light1" type="Sprite" parent="."]
+modulate = Color( 0.31, 5.81, 0.35, 0.21 )
+light_mask = -2147483647
+material = SubResource( 2 )
+position = Vector2( 0.391609, -11.1945 )
+scale = Vector2( 2.79637, 2.79637 )
+texture = ExtResource( 3 )
 
 [node name="slash" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -23,6 +35,10 @@ polygon = PoolVector2Array( -8, -32, 30, -30, 32, 0, 30, 30, -8, 32, 8, 12, 8, -
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DieOnImpactChecker"]
 position = Vector2( 0, -31.7797 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DieOnImpactChecker"]
+position = Vector2( 0, -4.83002 )
 shape = SubResource( 1 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="DieOnImpactChecker" to="." method="_on_DieOnImpactChecker_body_entered"]

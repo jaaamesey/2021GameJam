@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scn/endless.gd" type="Script" id=1]
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fnt/font.tres" type="DynamicFont" id=3]
 
 [node name="Endless" type="Node2D"]
 script = ExtResource( 1 )
@@ -18,13 +19,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+margin_left = -137.296
+margin_top = -5.25725
+margin_right = 68.7037
+margin_bottom = 55.7428
+rect_rotation = -3.46362
+color = Color( 0.0313726, 0.0313726, 0.0313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 margin_left = 11.2246
 margin_top = 12.3471
 margin_right = 165.225
 margin_bottom = 43.3471
-text = "20000m travelled
-4000m away from death"
+custom_fonts/font = ExtResource( 3 )
+text = "888m"
 __meta__ = {
 "_edit_use_anchors_": false
 }
