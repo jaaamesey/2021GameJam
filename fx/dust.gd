@@ -1,18 +1,23 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
+onready var area: Area2D = $Area2D
+var fall_dir := 1
 func _ready():
 	global_rotation_degrees = randf() * 360
 	scale *= rand_range(1.2, 2.0)
-	pass # Replace with function body.
+	
+	if randf() < 0.1: fall_dir = -1
 
 func _physics_process(delta):
+	var should_fall = true
+	for body in area.get_overlapping_bodies():
+		if body.owner.name == "Player":
+			continue
+		else:
+			should_fall = false
+	if should_fall:
+		global_position.y += fall_dir * rand_range(0.1, 1.8)
+		
 	scale *= 0.9
 	if scale.length_squared() < 0.1:
 		queue_free()
