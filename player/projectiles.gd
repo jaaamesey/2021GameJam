@@ -34,7 +34,7 @@ func slash(offset: Vector2, angle_degrees: float):
 	instanced_slash.global_position = player.global_position + offset
 	instanced_slash.global_rotation_degrees = angle_degrees
 	
-	get_tree().root.add_child(instanced_slash)
+	owner.owner.add_child(instanced_slash)
 	
 	melee_sprite.visible = true
 	melee_sprite.rotation_degrees = angle_degrees

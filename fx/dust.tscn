@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://fx/dust1.png" type="Texture" id=1]
+[ext_resource path="res://fx/dust.gd" type="Script" id=2]
+
+[node name="Dust" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="dust1" type="Sprite" parent="."]
+position = Vector2( -0.172314, -1.08494 )
+texture = ExtResource( 1 )

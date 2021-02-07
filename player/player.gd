@@ -3,6 +3,8 @@ extends RigidBody2D
 
 var dirt_fx := preload("res://fx/Dirt Crumbles/dirt.tscn")
 
+onready var dust_maker: DustMaker = $DustMaker
+
 var x_spd_deadzone := 3.0
 
 var ground_accel_spd := 3.0
@@ -172,6 +174,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		if in_ground_pound and timer_done("ground_pound_freeze"): 
 			in_ground_pound = false
 			start_timer("ground_pound_landing")
+			dust_maker.make_ground_pound_dust()
 			$Camera2D.schedule_shake(0.26, 0.05)
 			$Camera2D.schedule_shake(0.3, 0.14)
 
@@ -243,6 +246,8 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 				dy += floor_influence.y
 				last_jump_floor_influence = floor_influence
 				floor_velocity = Vector2()
+			
+			dust_maker.make_jump_dust()
 
 			start_timer("jump_cooldown")
 			start_timer("short_hop")
@@ -270,6 +275,8 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 				
 				# Can't wall jump on any moving platforms yet :(
 				last_jump_floor_influence = Vector2()
+				
+				dust_maker.make_wall_jump_dust(wall_jump_dir)
 				
 				start_timer("jump_cooldown")
 				start_timer("short_hop")
@@ -339,6 +346,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 					dx = max(min_slide_velocity, max_slide_velocity)
 				else:
 					dx = min(min_slide_velocity, max_slide_velocity)
+				dust_maker.make_ground_slide_dust()
 				
 			else:
 				dx *= 0.5
