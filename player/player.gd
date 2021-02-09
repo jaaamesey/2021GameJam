@@ -370,7 +370,7 @@ func kill():
 	ScreenFX.black_dir = 3.0
 	is_dead = true
 	yield(get_tree().create_timer(0.6), "timeout")
-	get_tree().reload_current_scene()
+	owner.game_over() # Assuming same API as Endless
 
 func can_jump():
 	if !timer_done("jump_cooldown"):

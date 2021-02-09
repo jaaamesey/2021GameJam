@@ -25,5 +25,4 @@ func _on_DieOnImpactChecker_body_entered(body):
 	speed = 0
 	yield(get_tree().create_timer(0.01), "timeout")
 	queue_free()
-	print("died to " + str(body))
 
