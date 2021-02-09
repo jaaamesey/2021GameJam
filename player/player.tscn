@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/spr/idle/idle_0.png" type="Texture" id=2]
@@ -32,6 +32,8 @@
 [ext_resource path="res://spr/light1.png" type="Texture" id=30]
 [ext_resource path="res://player/shadow.gd" type="Script" id=31]
 [ext_resource path="res://player/dust_maker.gd" type="Script" id=32]
+[ext_resource path="res://player/scarf.gd" type="Script" id=33]
+[ext_resource path="res://player/spr/cape.png" type="Texture" id=34]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -286,10 +288,12 @@ __meta__ = {
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
 process_priority = -999999
+modulate = Color( 0, 0.835294, 1, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -0.0468216
 margin_right = 1280.0
-margin_bottom = 720.0
+margin_bottom = 719.953
 texture = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -386,6 +390,38 @@ position = Vector2( 0, -16 )
 frames = SubResource( 27 )
 animation = "idle"
 script = ExtResource( 3 )
+
+[node name="Scarf" type="Node2D" parent="AnimatedSprite"]
+position = Vector2( 1.97627, -2.01727 )
+script = ExtResource( 33 )
+
+[node name="Cape" type="Node2D" parent="AnimatedSprite/Scarf"]
+position = Vector2( -1.00339, -2.56326 )
+z_index = -42
+
+[node name="cape" type="Sprite" parent="AnimatedSprite/Scarf/Cape"]
+modulate = Color( 0.0705882, 0.580392, 0.568627, 1 )
+position = Vector2( -3, 13 )
+texture = ExtResource( 34 )
+
+[node name="rect2" type="ColorRect" parent="AnimatedSprite/Scarf/Cape"]
+visible = false
+margin_left = -7.0
+margin_top = -1.0
+margin_right = 1.0
+margin_bottom = 19.0
+color = Color( 0.0431373, 0.572549, 0.639216, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rect" type="ColorRect" parent="AnimatedSprite/Scarf"]
+margin_right = 3.0
+margin_bottom = 2.0
+color = Color( 0.0431373, 0.572549, 0.639216, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite"]
 visible = false
