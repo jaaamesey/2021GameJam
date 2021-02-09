@@ -54,16 +54,24 @@ func load_fragments():
 			continue
 		fragments.push_back(instanced_scene)
 	
-	# Re-order fragments from least to most difficult
-	fragments.sort_custom(LevelSorter, "sort_by_difficulty_asc")	
+	## Re-order fragments from least to most difficult
+	#fragments.sort_custom(LevelSorter, "sort_by_difficulty_asc")	
 
 func add_next_fragment(): 
 	next_fragment = fragments[randi() % fragments.size()].duplicate()
 	add_child(next_fragment)
 	next_fragment.global_position = Vector2(next_fragment_x_pos, -64)
 	
-	if last_fragment != null:
-		update_last_fragment_end_column()
+	if last_fragment == null:
+		# If first fragment, set stuff before it to stone
+		for x in range(-20, 0):
+			for y in range(10, 17):
+				next_fragment.tilemap.set_cell(x, y, 1)
+		var region_start := Vector2(-20, 0)
+		var region_end := Vector2(1, 20)
+		next_fragment.tilemap.update_bitmask_region(region_start, region_end)
+	else: 
+		merge_fragments()
 	
 	last_fragment = next_fragment
 	last_fragment_x_pos = next_fragment_x_pos
@@ -73,9 +81,7 @@ func add_next_fragment():
 	if fragment_stack.size() >= 4:
 		fragment_stack.pop_front().queue_free()
 		
-	
-
-func update_last_fragment_end_column():
+func merge_fragments():
 	var max_tilemap_height := max(last_fragment.tilemap_rect_size.y, next_fragment.tilemap_rect_size.y)
 	var min_tilemap_y_pos := min(last_fragment.tilemap_rect.position.y, next_fragment.tilemap_rect.position.y)
 	
@@ -94,6 +100,7 @@ func update_last_fragment_end_column():
 func game_over():
 	if max_travelled > high_score:
 		SaveManager.save_high_score(max_travelled)
+	yield(get_tree().create_timer(0.6), "timeout")
 	get_tree().reload_current_scene()
 	
 class LevelSorter:

@@ -58,9 +58,9 @@ __meta__ = {
 }
 
 [node name="KillRect" type="ColorRect" parent="."]
-margin_left = -310.71
+margin_left = -1305.0
 margin_top = -194.0
-margin_right = -298.71
+margin_right = -299.0
 margin_bottom = 661.0
 color = Color( 1, 0, 0, 1 )
 __meta__ = {
